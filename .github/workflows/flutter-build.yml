@@ -1,4 +1,4 @@
-name: Flutter Build APK (Shuaib Jaame App Final Fixed)
+name: Flutter Build APK (Shuaib Jaame App - Fully Functional)
 
 on:
   push:
@@ -9,29 +9,32 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.6'
-          channel: 'stable'
 
-      - name: Create Supported Gradle Project
+      - name: Fix Project Structure
         run: |
+          rm -rf temp_app
           flutter create -t app temp_app
-          cp -r lib assets pubspec.yaml temp_app/
+          cp -r lib temp_app/
+          cp -r assets temp_app/
+          cp pubspec.yaml temp_app/
           cd temp_app
           flutter pub get
 
-      - name: Build Release APK
+      - name: Build release APK
         working-directory: temp_app
         run: flutter build apk --release
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Shuaib_Jaame_App_Fixed
+          name: Shuaib_Jaame_App_Functional
           path: temp_app/build/app/outputs/flutter-apk/app-release.apk
