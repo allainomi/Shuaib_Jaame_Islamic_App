@@ -1,0 +1,20 @@
+name: shuaib_jaame_islamic_app_final
+description: Shuaib Jaame Islamic App - Final v1 (card UI, splash, Arabic icon and GitHub Actions build)
+version: 1.0.0+1
+environment:
+  sdk: ">=2.18.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/logo.png
+    - assets/images/author.png
