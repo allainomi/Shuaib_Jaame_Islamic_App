@@ -1,4 +1,4 @@
-name: Flutter Build APK (Shuaib Jaame App Final)
+name: Flutter Build APK (Shuaib Jaame App Final Fixed)
 
 on:
   push:
@@ -9,29 +9,29 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
-
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.6'
+          channel: 'stable'
 
-      - name: Enable Android SDK Licenses
+      - name: Create Supported Gradle Project
         run: |
-          yes | sdkmanager --licenses || true
+          flutter create -t app temp_app
+          cp -r lib assets pubspec.yaml temp_app/
+          cd temp_app
+          flutter pub get
 
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Build release APK
+      - name: Build Release APK
+        working-directory: temp_app
         run: flutter build apk --release
 
-      - name: Upload build artifact
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Shuaib_Jaame_App_Final_v1
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: Shuaib_Jaame_App_Fixed
+          path: temp_app/build/app/outputs/flutter-apk/app-release.apk
